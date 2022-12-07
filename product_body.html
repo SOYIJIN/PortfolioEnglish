@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> PMHEALTHCARE </title>
+
+    <link rel="stylesheet" href="./lib/setup.css">
+    <script src="./lib/jquery.js"></script>
+
+    <!-- 슬라이드 연결링크 -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- CDN 선언 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7fb4a53106.js" crossorigin="anonymous"></script>
+
+
+    <style>
+
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+        body{
+            font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+
+        header{
+            position: fixed;
+            width: 100%;
+            z-index: 1003;
+            color: #fff;
+            transition: all .5s;
+            padding: 40px 40px;
+        }
+        
+        header:hover, header.view{
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0px -1px 4px 0px #0009;
+        }
+        
+        header.view{
+            padding: 20px 40px;
+        }
+
+        header #logo{}
+        
+        header #logo img{
+            width: 50px;
+            height: 50px;
+        }
+
+        header #menu{
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        header #menu .menu{}
+
+        header #menu .menu ul{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 0px;
+        }
+        header #menu .menu ul li{}
+        header #menu .menu ul li a{
+            width: 100%;
+            font-size: 18px;
+        }
+        header:hover #menu .menu ul li a{
+            font-weight: bold;
+        }
+
+        header #menu .menuBox_a{
+            position: absolute;
+            width: 100%;
+            top: 100%;
+            left: 0%;
+            max-height: 0px;
+            overflow: hidden;
+            z-index: 1002;
+            opacity: 0;
+            transition: opacity .5s 0s, max-height 0s .5s;
+        }
+        header #menu:hover .menuBox_a{
+            max-height: 1000px;
+            border-top: solid 1px #eee;
+            background-color: white;
+            opacity: 1;
+            transition: opacity .5s 0s, max-height 0s 0s;
+        }
+
+        header #menu .menuBox_a .grid{
+            display: inline-grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 0px;
+            margin: 20px 0px 40px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        header #menu .menuBox_a .grid ul{}
+        header #menu .menuBox_a .grid ul li{
+            width: 100%;
+        }
+        header #menu .menuBox_a .grid ul li a{
+            color: #000;
+            width: 100%;
+            line-height: 50px;
+            font-size: 18px;
+        }
+        header #menu .menuBox_a .grid ul li:hover a{
+            font-weight: bold;
+            color: #234502;
+        }
+
+        header #button{}
+
+        header #button .line{
+            width: 40px;
+            height: 40px;
+            transition: all .5s;
+            position: relative;
+            z-index: 1000;
+        }
+        header #button .line span{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 20px;
+            height: 2px;
+            background-color: #fff;
+            z-index: 999;
+        }
+        header.view #button .line span{
+            background-color: #000;
+        }
+        header:hover #button .line span{
+            background-color: #000;
+        }
+
+        header #button.view .line span{
+            transition: all .5s;
+            top: 50%;
+            left: 120%;
+            background-color: #000;
+        }
+        
+
+        /* 메뉴 줄 3개 */
+        header #button .line span:nth-child(1){
+            transform: translate(-50%,-50%) translateY(-6px);
+        }
+        header #button .line span:nth-child(3){
+            transform: translate(-50%,-50%) translateY(6px);
+        }
+
+        /* X 만들기 */
+        header #button.view .line span:nth-child(2){
+            opacity: 0;
+        }
+
+        header #button.view .line span:nth-child(1){
+            transform: translate(-50%,-50%) rotate(45deg);
+        }
+        header #button.view .line span:nth-child(3){
+            transform: translate(-50%,-50%) rotate(-45deg);
+        }
+
+        header #button .menuBox_s{
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            width: 400px;
+            height: 100%;
+            background-color: #fff;
+            z-index: 998;
+            transform: translateX(100%);
+            transition: transform 1s;
+        }
+        header #button.view .menuBox_s{
+            transform: translate(0%);
+        }
+        header #button .menuBox_s ul{
+            margin-top: 150px;
+        }
+        header #button .menuBox_s ul li{
+            width: 100%;
+        }
+        header #button .menuBox_s ul li a{
+            width: 100%;
+            text-align: left;
+            color: #000;
+            padding: 0px 50px;
+            line-height: 40px;
+            margin: 10px 0px;
+            font-size: 20px;
+        }
+        header #button .menuBox_s ul li a:hover{
+            font-weight: bold;
+        }
+        main{}
+
+        main #home{}
+
+        main #home .img{
+            width: 100%;
+            position: relative;
+        }
+        main #home .img img{
+            width: 100%;
+            height: 500px;
+            filter: brightness(50%); 
+        }
+
+        main #home .title{
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        main #home .title .name{
+            font-size: 60px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        main #home .title .sub{
+            font-size: 18px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: -1px;
+            margin-top: 10px;
+        }
+        
+
+        main #home .title .sub .icon_house{
+            font-size: 18px;
+            font-style: normal;
+            color: #fff;
+        }
+        main #home .title .sub .icon_house::before{
+            font-family: "FontAwesome";
+            content: "\f015 ";
+        }
+
+        main #home .title .sub .angle-right{
+            font-size: 18px;
+            font-style: normal;
+            padding: 0px 10px;
+        }
+        main #home .title .sub .angle-right::before{
+            font-family: "FontAwesome";
+            content: " \f105 ";
+        }
+        
+        main #tap{
+            border-bottom: 1px solid #e2e2e2;
+        }
+        main #tap .grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 0px;
+        }
+        main #tap .grid ul{
+            padding: 27px 0px;
+            border-right: 1px solid #e2e2e2;
+        }
+        main #tap .grid ul:nth-child(1){
+            border-left: 1px solid #e2e2e2;
+        }
+
+        main #tap .grid ul li{}
+
+        main #tap .grid ul li a{
+            font-size: 18px;
+        }
+        main #tap .grid ul li a:hover{
+            font-weight: bold;
+            color: #234502;
+        }
+
+        main #haircare{
+            margin-bottom: 180px;
+        }
+
+        main #haircare .title{}
+        main #haircare .title .name{
+            font-size: 42px;
+            font-weight: bold;
+            color: #000;
+            letter-spacing: 1px;
+            margin: 100px 0px 90px;
+        }
+
+        main #haircare .Borad_one{
+            display: grid;
+            grid-template-columns: 1fr 600px;
+            grid-gap: 20px;
+        }
+
+        main #haircare .Borad_one .img{
+            width: 100%;
+        }
+        main #haircare .Borad_one .img img{
+            width: 100%;
+            height: 500px;
+        }
+
+        main #haircare .Borad_one > .subject{
+            text-align: left;
+            margin-left: 20px;
+        }
+        main #haircare .Borad_one > .subject .name{
+            margin-top: 18px;
+            font-size: 35px;
+            font-weight: bold;
+        }
+        main #haircare .Borad_one > .subject .name span{
+            color: #e87300;
+        }
+
+        main #haircare .Borad_one > .subject .sub{
+            margin-top: 30px;
+            font-size: 20px;
+            color: #555;
+        }
+
+        footer{
+            background-color: #222;
+            padding: 70px 0px;
+            color: white;
+        }
+        
+        footer .flex{}
+
+        footer .flex .logo{
+            flex: 1;
+        }
+        footer .flex .logo img{
+            width: 100px;
+            height: 100px;
+        }
+
+        footer .flex .address{
+            flex: 3;
+            text-align: left;
+            font-size: 15px;
+            line-height: 25px;
+            padding: 0px 40px;
+        }
+        footer .flex .address .PM{
+            font-weight: bold;
+        }
+        footer .flex .address .COPYRIGHT{
+            color: #888;
+        }
+
+        footer .flex .Account{
+            text-align: left;
+            font-size: 15px;
+            line-height: 25px;
+            padding: 0px 40px;
+        }
+        footer .flex .Account span{
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <header>
+
+        <div class="flex">
+
+                <a href="./index.html" target="_blank" id="logo">
+                    <img src="./img/Logo.png" alt="">
+                </a>
+
+                <nav id="menu">
+                    <div class="menu">
+                        <ul>
+                            <li><a href="./company_about.html">Company</a></li>
+                            <li><a href="./product_hair.html">Product</a></li>
+                            <li><a href="./business_oem_odm.html">Business</a></li>
+                            <li><a href="./contact_us.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="menuBox_a">
+                        <div class="grid">
+                            <ul>
+                                <li><a href="./company_about.html">About Us</a></li>
+                                <li><a href="./company_lotation.html">Lotation</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="./product_hair.html">Hair Care</a></li>
+                                <li><a href="./product_health.html">Health Care</a></li>
+                                <li><a href="./product_face.html">Face Care</a></li>
+                                <li><a href="./product_body.html">Body Care</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="./business_oem_odm.html">OEM&ODM</a></li>
+                                <li><a href="./business_r_d.html">R&D</a></li>
+                                <li><a href="#"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div id="button">
+
+                    <div class="line">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="menuBox_s">
+                        <ul>
+                            <li><a href="./company_about.html">Company</a></li>
+                            <li><a href="./product_hair.html">Product</a></li>
+                            <li><a href="./business_oem_odm.html">Business</a></li>
+                            <li><a href="./contact_us.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+            </div>
+            
+        <div class="menuBox"></div>
+
+        <div class="nav_bg"></div>
+
+    </header>
+
+    <main>
+
+        <!-- Main 배경 이미지 -->
+        <div id="home">
+            
+            <div class="img">
+                <img src="./img/Bg_product.png" alt="">
+            </div>
+
+            <div class="title">
+                <div class="name">Product</div>
+                <div class="sub">
+
+                    <i class="icon_house"></i>
+                    
+                    <i class="angle-right"></i>
+                    Product
+
+                    <i class="angle-right"></i>
+                    Body Care
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tap 메뉴 -->
+        <div id="tap">
+            <div class="wrap">
+
+                <div class="grid">
+                    <ul>
+                        <li>
+                            <a href="./product_hair.html">Hair Care</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="./product_health.html">Health Care</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="./product_face.html">Face Care</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="./product_body.html">Body Care</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 게시글 -->
+        <div id="haircare">
+            <div class="wrap">
+
+                <div class="title">
+                    <div class="name">Body Care</div>
+                </div>
+    
+                <div class="Borad_one">
+    
+                    <div class="img">
+                        <img src="./img/bodycare_01.jpeg" alt="">
+                    </div>
+    
+                    <div class="subject">
+                        <div class="name">RED GINSENG SOAP <br> <span>SEPTEMBER 25th</span></div>
+                        <div class="sub">Soap that is healthy, more hygienic and <br>
+                                         environmentally friendly without irritation <br>
+                                         to the skin
+                                         <br><br>
+                                         Saponin in our soap is excellent for a variety <br>
+                                         of pharmacological functions and, most <br>
+                                         importantly has a basic foaming ingredient.
+                                         <br><br>
+                                         In addition, it is effective in improving skin <br>
+                                         trouble and wrinkles through anti-inflammatory <br>
+                                         effects as well as whitening effects.</div>
+                    </div>
+    
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+
+        <div class="wrap">
+            <div class="flex">
+
+                <a href="#" class="logo">
+                    <img src="./img/Logo.png" alt="">
+                </a>
+
+                <div class="address"><span class="PM">PM Healthcare Co. Ltd</span> <br> 
+                                     Address : No.401 FirstJoyang BLDG, 135, Jeungsanyeok-ro, Mulgeum-eup, <br>
+                                     Yangsan-si, Gyeongsangnam-do, South Korea [50653] <br>
+                                     Tel : +82-55-321-4055  |   Fax : +82-55-367-4050 <br>
+                                     <span class="COPYRIGHT">COPYRIGHT 2021 PM Healthcare All right reserved.</span></div>
+
+                <div class="Account"><span>Account details</span> <br>
+                                     Beneficiary Name : PM HEALTHCARE CO. LTD <br>
+                                     Bank Name : KEB Hana Bank <br>
+                                     Account No. : 25891000712538 <br>
+                                     Swift Code : KOEXKRSE or KOEXKRSEXXX <br>
+                                     Address : 509-48 59, Naeoejungang-ro, Gimhae-si, Gyeongnam, South Korea <br>
+                                     Tel : +82-55-334-9001  |  Fax : +82-55-334-9005</div>
+
+            </div>
+        </div>
+
+    </footer>
+
+</body>
+<script>
+
+    $(function(){
+
+        const section = $("header");
+
+        console.log(section);
+
+
+        // 메뉴 스크롤
+        $(window).scroll(function(){
+            const top = $(this).scrollTop();
+
+            if(top > 50){
+                $("header").addClass("view");
+            }else{
+                $("header").removeClass("view");
+            }
+
+        })
+
+        // 메뉴 버튼 클릭
+        $("header #button").on("click",function(){
+            $("#button").toggleClass("view");
+        })
+
+    })
+
+</script>
+</html>

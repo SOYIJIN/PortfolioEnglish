@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> PMHEALTHCARE </title>
+
+    <link rel="stylesheet" href="./lib/setup.css">
+    <script src="./lib/jquery.js"></script>
+
+    <!-- 슬라이드 연결링크 -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+    <style>
+
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+        body{
+            font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+
+        header{
+            position: fixed;
+            width: 100%;
+            z-index: 1003;
+            color: #fff;
+            transition: all .5s;
+            padding: 40px 40px;
+        }
+        
+        header:hover, header.view{
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0px -1px 4px 0px #0009;
+        }
+        
+        header.view{
+            padding: 20px 40px;
+        }
+
+        header #logo{}
+        
+        header #logo img{
+            width: 50px;
+            height: 50px;
+        }
+
+        header #menu{
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        header #menu .menu{}
+
+        header #menu .menu ul{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 0px;
+        }
+        header #menu .menu ul li{}
+        header #menu .menu ul li a{
+            width: 100%;
+            font-size: 18px;
+        }
+        header:hover #menu .menu ul li a{
+            font-weight: bold;
+        }
+
+        header #menu .menuBox_a{
+            position: absolute;
+            width: 100%;
+            top: 100%;
+            left: 0%;
+            max-height: 0px;
+            overflow: hidden;
+            z-index: 1002;
+            opacity: 0;
+            transition: opacity .5s 0s, max-height 0s .5s;
+        }
+        header #menu:hover .menuBox_a{
+            max-height: 1000px;
+            border-top: solid 1px #eee;
+            background-color: white;
+            opacity: 1;
+            transition: opacity .5s 0s, max-height 0s 0s;
+        }
+
+        header #menu .menuBox_a .grid{
+            display: inline-grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 0px;
+            margin: 20px 0px 40px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        header #menu .menuBox_a .grid ul{}
+        header #menu .menuBox_a .grid ul li{
+            width: 100%;
+        }
+        header #menu .menuBox_a .grid ul li a{
+            color: #000;
+            width: 100%;
+            line-height: 50px;
+            font-size: 18px;
+        }
+        header #menu .menuBox_a .grid ul li:hover a{
+            font-weight: bold;
+            color: #234502;
+        }
+
+        header #button{}
+
+        header #button .line{
+            width: 40px;
+            height: 40px;
+            transition: all .5s;
+            position: relative;
+            z-index: 1000;
+        }
+        header #button .line span{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 20px;
+            height: 2px;
+            background-color: #fff;
+            z-index: 999;
+        }
+        header.view #button .line span{
+            background-color: #000;
+        }
+        header:hover #button .line span{
+            background-color: #000;
+        }
+
+        header #button.view .line span{
+            transition: all .5s;
+            top: 50%;
+            left: 120%;
+            background-color: #000;
+        }
+        
+
+        /* 메뉴 줄 3개 */
+        header #button .line span:nth-child(1){
+            transform: translate(-50%,-50%) translateY(-6px);
+        }
+        header #button .line span:nth-child(3){
+            transform: translate(-50%,-50%) translateY(6px);
+        }
+
+        /* X 만들기 */
+        header #button.view .line span:nth-child(2){
+            opacity: 0;
+        }
+
+        header #button.view .line span:nth-child(1){
+            transform: translate(-50%,-50%) rotate(45deg);
+        }
+        header #button.view .line span:nth-child(3){
+            transform: translate(-50%,-50%) rotate(-45deg);
+        }
+
+        header #button .menuBox_s{
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            width: 400px;
+            height: 100%;
+            background-color: #fff;
+            z-index: 998;
+            transform: translateX(100%);
+            transition: transform 1s;
+        }
+        header #button.view .menuBox_s{
+            transform: translate(0%);
+        }
+        header #button .menuBox_s ul{
+            margin-top: 150px;
+        } 
+        header #button .menuBox_s ul li{
+            width: 100%;
+        }
+        header #button .menuBox_s ul li a{
+            width: 100%;
+            text-align: left;
+            color: #000;
+            padding: 0px 50px;
+            line-height: 40px;
+            margin: 10px 0px;
+            font-size: 20px;
+        }
+        header #button .menuBox_s ul li a:hover{
+            font-weight: bold;
+        }
+
+        main{}
+
+        main #home{}
+
+        main #home .swiper-slide{
+            width: 100%;
+            height: 850px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: height .5s;
+        }
+
+        main #home .swiper-slide .title{
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            width: 100%;
+            transform: translateY(-50%);
+            text-shadow: 1px 1px 1px #444;
+        }
+        main #home  .swiper-slide .title .name{
+            font-size: 70px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        main #home .swiper-slide .title .sub{
+            font-size: 20px;
+            margin-top: 10px;
+            color: #eee;
+        }
+        
+        main #home .swiper-slide.swiper-slide-active{
+            opacity: 1 !important;
+        }
+
+        main #home .swiper-slide.p1{
+            background-image: url(./img/Back_ground_01.jpg);
+        }
+        main #home .swiper-slide.p2{
+            background-image: url(./img/Back_ground_02.jpg);
+        }
+
+        main #home .next, main #home .prev{
+            margin: 0px 60px 0px;
+            color: #fff;
+            top: 50%;
+        }
+
+        main #home .pagin{
+            display: none;
+        }
+
+        main #service{
+            width: 100%;
+            margin-bottom: 160px;
+            cursor: pointer;
+        }
+
+        main #service .title{
+            margin: 115px 0px 90px;
+        }
+        main #service .title .name{
+            font-weight: bold;
+            font-size: 40px;
+            color: #000;
+            letter-spacing: 1px;
+        }
+
+        main #service .grid{}
+        main #service .grid ul{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 20px;
+        }
+
+        main #service .grid ul li{
+            width: 100%;
+        }
+
+        main #service .grid ul li .first{
+            width: 100%;
+        }
+        main #service .grid ul li .first .img{
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        main #service .grid ul li .first .img img{
+            position: absolute;
+            width: 150%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            transition: all .5s;
+        }
+        main #service .grid ul li .first .img img:hover{
+            width: 180%;
+        }
+
+        main #service .grid ul li .first .project{
+            text-align: left;
+            font-size: 25px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        main #service .grid ul li .first:hover .project{
+            color: #234502;
+        }
+
+        main #company{
+            display: grid;
+            grid-template-columns: 1fr 700px;
+            grid-gap: 0px;
+        }
+
+        main #company .img{
+            width: 100%;
+        }
+        main #company .img img{
+            width: 100%;
+            height: 500px;
+        }
+
+        main #company .story{
+            background-color: #267bbc;
+            color: #fff;
+        }
+
+        main #company .story .title{
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 90px;
+        }
+        main #company .story .sub{
+            font-size: 17px;
+            margin-top: 35px;
+        }
+
+        main #company .story .button{
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 50px;
+            margin-top: 60px;
+            width: 191px;
+            height: 50px;
+            display: inline-block;
+            border: 1px solid #fff;
+            transition: all .5s;
+            cursor: pointer;
+        }
+        main #company .story .button:hover{
+            background-color: white;
+            color: #267bbc;
+        }
+
+        main #product{}
+
+        main #product .title{
+            margin-bottom: 50px;
+        }
+        main #product .title .name{
+            font-size: 40px;
+            font-weight: bold;
+            color: #000;
+            letter-spacing: 1px;
+            margin: 160px 0px 90px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            height: 900px;
+        }
+            
+        /* // Grid item (third) */
+        .grid-container .grid-item:nth-child(3) {
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 3;
+        }
+
+        .grid-container .grid-item{
+            width: 100%;
+        }
+
+        .grid-container .grid-item img{
+            width: 100%;
+            height: 100%;
+        }
+
+
+        main #contact{
+            background-color: #e9e9e9;
+            height: 570px;
+            margin: 330px 0px 0px;
+            display: grid;
+            grid-template-columns: 800px 1fr;
+            grid-gap: 0px;
+        }
+
+        main #contact .contact{
+            padding-left: 200px;
+            text-align: left;
+        }
+
+        main #contact .contact .title{
+            font-size: 40px;
+            font-weight: bold;
+            margin: 60px 0px 30px; 
+            color: #234502;
+        }
+        main #contact .contact .intro{
+            font-size: 18px;
+            color: #333;
+        }
+        main #contact .contact .intro span{
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        main #contact .contact .info{
+            font-size: 18px;
+            margin: 50px 0px 120px;
+        }
+        main #contact .contact .info span{
+            font-weight: bold;
+        }
+
+        main #contact .contact .button{
+            font-size: 22px;
+            font-weight: bold;
+            line-height: 50px;
+            margin-top: 35px;
+            text-align: center;
+            color: #234502;
+            width: 180px;
+            height: 50px;
+            border: 1px solid #234502;
+            transition: all .5s;
+            cursor: pointer;
+        }
+        main #contact .contact .button:hover{
+            color: #fff;
+            background-color: #234502;
+        }
+
+        main #contact .map{
+            text-align: right;
+        }
+        main #contact .map iframe{
+            width: 100%;
+            display: inline-block;
+            margin: 30px 0 auto;
+        }
+
+        footer{
+            background-color: #222;
+            padding: 70px 0px;
+            color: white;
+        }
+        
+        footer .flex{}
+
+        footer .flex .logo{
+            flex: 1;
+        }
+        footer .flex .logo img{
+            width: 100px;
+            height: 100px;
+        }
+
+        footer .flex .address{
+            flex: 3;
+            text-align: left;
+            font-size: 15px;
+            line-height: 25px;
+            padding: 0px 40px;
+        }
+        footer .flex .address .PM{
+            font-weight: bold;
+        }
+        footer .flex .address .COPYRIGHT{
+            color: #888;
+        }
+
+        footer .flex .Account{
+            text-align: left;
+            font-size: 15px;
+            line-height: 25px;
+            padding: 0px 40px;
+        }
+        footer .flex .Account span{
+            font-weight: bold;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+    <header>
+
+        <div class="flex">
+
+                <a href="http://www.pmhealthcare.co.kr/" target="_blank" id="logo">
+                    <img src="./img/Logo.png" alt="">
+                </a>
+
+                <nav id="menu">
+                    <div class="menu">
+                        <ul>
+                            <li><a href="./company_about.html">Company</a></li>
+                            <li><a href="./product_hair.html">Product</a></li>
+                            <li><a href="./business_oem_odm.html">Business</a></li>
+                            <li><a href="./contact_us.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="menuBox_a">
+                        <div class="grid">
+                            <ul>
+                                <li><a href="./company_about.html">About Us</a></li>
+                                <li><a href="./company_lotation.html">Lotation</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="./product_hair.html">Hair Care</a></li>
+                                <li><a href="./product_health.html">Health Care</a></li>
+                                <li><a href="./product_face.html">Face Care</a></li>
+                                <li><a href="./product_body.html">Body Care</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="./business_oem_odm.html">OEM&ODM</a></li>
+                                <li><a href="./business_r_d.html">R&D</a></li>
+                                <li><a href="#"></a></li>
+                            </ul>
+                            <ul>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div id="button">
+
+                    <div class="line">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="menuBox_s">
+                        <ul>
+                            <li><a href="./company_about.html">Company</a></li>
+                            <li><a href="./product_hair.html">Product</a></li>
+                            <li><a href="./business_oem_odm.html">Business</a></li>
+                            <li><a href="./contact_us.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+            </div>
+            
+        <div class="menuBox"></div>
+
+        <div class="nav_bg"></div>
+
+    </header>
+
+    <main>
+
+        <!-- 슬라이드 설정 -->
+        <div id=home class="swiper mySwiper">
+            <div class="swiper-wrapper">
+
+              <div class="swiper-slide p1">
+                <div class="title">
+                    <div class="name">WELCOME TO <br> IMMUNE VILLAGE</div>
+                    <div class="sub"></div>
+                </div>
+              </div>
+              <div class="swiper-slide p2">
+                <div class="title">
+                    <div class="name">WE CARE ABOUT YOU <br> BOOST YOUR IMMUNITY!</div>
+                    <div class="sub"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="swiper-button-next next"></div>
+            <div class="swiper-button-prev prev"></div>
+            <div class="swiper-pagination pagin"></div>
+
+        </div>
+
+        <!-- Main Service -->
+        <div id="service">
+
+            <div class="title">
+                <div class="name">MAIN SERVICE</div>
+            </div>
+
+            <div class="grid">
+                <div class="wrap">
+
+                    <ul>
+                        <li>
+                            <a href="./company_about.html" class="first">
+                                <div class="img">
+                                    <img src="./img/Service_01.png" alt="">
+                                </div>
+                                <div class="project">Company</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./product_hair.html" class="first">
+                                <div class="img">
+                                    <img src="./img/Service_03.png" alt="">
+                                </div>
+                                <div class="project">Product</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./business_oem_odm.html" class="first">
+                                <div class="img">
+                                    <img src="./img/Service_02.jpg" alt="">
+                                </div>
+                                <div class="project">Business</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./contact_us.html" class="first">
+                                <div class="img">
+                                    <img src="./img/Service_04.jpg" alt="">
+                                </div>
+                                <div class="project">Contact</div>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Brand Story -->
+        <div id="company">
+
+            <div class="img">
+                <img src="./img/Our_company.jpg" alt="">
+            </div>
+
+            <div class="story">
+                <div class="title">BRAND STORY</div>
+                <div class="sub">We want to provide a place where everyone can <br>
+                                 breathe comfortably through practice such as <br>
+                                 making natural materials that can breathe positively <br>
+                                 with humans, not using chemicals that are harmful <br>
+                                 to the human body, and providing visual stability to humans.</div>
+                <a href="./company_about.html" class="button">View more</a>
+            </div>
+
+        </div>
+
+        <!-- Our Product -->
+        <div id="product">
+            <div class="wrap">
+
+                <div class="title">
+                    <div class="name">OUR PRODUCT</div>
+                </div>
+    
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <img src="./img/Product_07.jpg" alt="">
+                    </div>
+                    <div class="grid-item">
+                        <img src="./img/Product_09.jpg" alt="">
+                    </div>
+                    <div class="grid-item">
+                        <img src="./img/Product_01.jpg" alt="">
+                    </div>
+                    <div class="grid-item">
+                        <img src="./img/Product_08.jpg" alt="">
+                    </div>
+                    <div class="grid-item">
+                        <img src="./img/Product_06.jpg" alt="">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Contact -->
+        <div id="contact">
+
+            <div class="contact">
+                    <div class="title">CONTACT US</div>
+                    <div class="intro"><span>PMHEALTHCARE is always open.</span> <br> PMHEALTHCARE rewards you with the best results.</div>
+                    <div class="info"><span>Tel</span> : +82-55-321-4055 <br>
+                                      <span>E-mail</span> : pmhealthcare@naver.com <br>
+                                      <span>HOME</span> : www.pmhealthcare.co.kr</div>
+                    <div class="button">Contact</div>
+            </div>
+
+            <div class="map">
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1627.9051415962617!2d129.00603433137687!3d35.310695215656814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356897bc51cebf75%3A0x1bdc2821c4dee9b0!2z7JaR7IKw7IS466y07ISc!5e0!3m2!1sen!2skr!4v1657518660057!5m2!1sen!2skr" width="1000" height="510 style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+
+        <div class="wrap">
+            <div class="flex">
+
+                <a href="#" class="logo">
+                    <img src="./img/Logo.png" alt="">
+                </a>
+
+                <div class="address"><span class="PM">PM Healthcare Co. Ltd</span> <br> 
+                                     Address : No.401 FirstJoyang BLDG, 135, Jeungsanyeok-ro, Mulgeum-eup, <br>
+                                     Yangsan-si, Gyeongsangnam-do, South Korea [50653] <br>
+                                     Tel : +82-55-321-4055  |   Fax : +82-55-367-4050 <br>
+                                     <span class="COPYRIGHT">COPYRIGHT 2021 PM Healthcare All right reserved.</span></div>
+
+                <div class="Account"><span>Account details</span> <br>
+                                     Beneficiary Name : PM HEALTHCARE CO. LTD <br>
+                                     Bank Name : KEB Hana Bank <br>
+                                     Account No. : 25891000712538 <br>
+                                     Swift Code : KOEXKRSE or KOEXKRSEXXX <br>
+                                     Address : 509-48 59, Naeoejungang-ro, Gimhae-si, Gyeongnam, South Korea <br>
+                                     Tel : +82-55-334-9001  |  Fax : +82-55-334-9005</div>
+
+            </div>
+        </div>
+
+    </footer>
+    
+</body>
+<script>
+
+    // Main 슬라이드
+    var home = new Swiper("#home", {
+
+        loop: true,
+
+        autoplay: {
+            delay: 5000,
+        },
+
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+
+      });
+
+
+    // 메뉴 스크롤
+    $(function(){
+
+        const section = $("header");
+
+        console.log(section);
+
+
+        $(window).scroll(function(){
+            const top = $(this).scrollTop();
+
+            if(top > 50){
+                $("header").addClass("view");
+            }else{
+                $("header").removeClass("view");
+            }
+
+        })
+
+        // 메뉴 버튼 클릭
+        $("header #button").on("click",function(){
+            $("#button").toggleClass("view");
+        })
+
+      })
+
+
+</script>
+</html>
